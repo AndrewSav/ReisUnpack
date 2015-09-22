@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace ReisUnpack
+namespace ReisUnpack.DataStructures
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct Bucket

@@ -5,8 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using LzhamWrapper;
 using LzhamWrapper.Enums;
+using ReisUnpack.DataStructures;
 
-namespace ReisUnpack
+namespace ReisUnpack.Engine
 {
     internal class Unpacker
     {

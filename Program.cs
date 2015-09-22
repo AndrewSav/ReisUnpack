@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 using CommandLine;
 using LzhamWrapper;
 using LzhamWrapper.Enums;
+using ReisUnpack.DataStructures;
+using ReisUnpack.Engine;
+using ReisUnpack.Options;
 
 namespace ReisUnpack
 {

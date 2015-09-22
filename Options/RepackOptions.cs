@@ -3,7 +3,7 @@ using CommandLine;
 using CommandLine.Text;
 using LzhamWrapper.Enums;
 
-namespace ReisUnpack
+namespace ReisUnpack.Options
 {
     [Verb("repack", HelpText = "Repaock Renown Explorers resources into archive")]
     class RepackOptions

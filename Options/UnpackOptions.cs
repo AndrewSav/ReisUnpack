@@ -2,7 +2,7 @@
 using CommandLine;
 using CommandLine.Text;
 
-namespace ReisUnpack
+namespace ReisUnpack.Options
 {
     [Verb("unpack",HelpText = "Unpacks Renown Explorers resource archive")]
     class UnpackOptions
