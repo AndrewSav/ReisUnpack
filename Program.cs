@@ -73,8 +73,8 @@ namespace ReisUnpack
 
                 if (status != CompressStatus.Success)
                 {
-                    Console.WriteLine("Failed to pack directory listing");
-                    Environment.FailFast("Failed to pack directory listing");
+                    Console.WriteLine("Failed to pack directory listing. ({status})");
+                    Environment.FailFast("Failed to pack directory listing. ({status})");
                 }
 
                 header.directoryListingCompressedSize = (uint)outsize;
@@ -94,8 +94,8 @@ namespace ReisUnpack
 
                 if (status != CompressStatus.Success)
                 {
-                    Console.WriteLine("Failed to pack file registry");
-                    Environment.FailFast("Failed to pack file registry");
+                    Console.WriteLine("Failed to pack file registry. ({status})");
+                    Environment.FailFast("Failed to pack file registry. ({status})");
                 }
 
                 header.fileRegistryCompressedSize = (uint)outsize;
@@ -115,8 +115,8 @@ namespace ReisUnpack
 
                 if (status != CompressStatus.Success)
                 {
-                    Console.WriteLine("Failed to pack hash table");
-                    Environment.FailFast("Failed to pack hash table");
+                    Console.WriteLine("Failed to pack hash table. ({status})");
+                    Environment.FailFast("Failed to pack hash table. ({status})");
                 }
 
                 header.hashtableCompressedSize = (uint)outsize;
@@ -136,8 +136,8 @@ namespace ReisUnpack
 
                 if (status != CompressStatus.Success)
                 {
-                    Console.WriteLine("Failed to pack bucket table");
-                    Environment.FailFast("Failed to pack bucket table");
+                    Console.WriteLine("Failed to pack bucket table. ({status})");
+                    Environment.FailFast("Failed to pack bucket table. ({status})");
                 }
 
                 header.bucketTableCompressedSize = (uint)outsize;

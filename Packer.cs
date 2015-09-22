@@ -152,8 +152,8 @@ namespace ReisUnpack
                 CompressStatus status = Lzham.CompressMemory(p, fileData, fileData.Length, 0, compressedData, ref compressedSize, 0, ref addler);
                 if (status != CompressStatus.Success && status != CompressStatus.OutputBufferTooSmall)
                 {
-                    Console.WriteLine($"Error compressing file {file}");
-                    Environment.FailFast($"Error compressing file {file}");
+                    Console.WriteLine($"Error compressing file {file}. ({status})");
+                    Environment.FailFast($"Error compressing file {file}. ({status})");
                 }
                 if (status != CompressStatus.OutputBufferTooSmall)
                 {

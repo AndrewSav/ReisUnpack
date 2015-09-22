@@ -90,8 +90,8 @@ namespace ReisUnpack
 
                 if (status != DecompressStatus.Success)
                 {
-                    Console.WriteLine($"Error decompressing file {fileName}");
-                    Environment.FailFast($"Error decompressing file {fileName}");
+                    Console.WriteLine($"Error decompressing file {fileName}. ({status})");
+                    Environment.FailFast($"Error decompressing file {fileName}. ({status})");
                 }
 
                 File.WriteAllBytes(fullName, outp);
