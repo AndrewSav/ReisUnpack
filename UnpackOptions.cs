@@ -4,14 +4,15 @@ using CommandLine.Text;
 
 namespace ReisUnpack
 {
-    class Options
+    [Verb("unpack",HelpText = "Unpacks Renown Explorers resource archive")]
+    class UnpackOptions
     {
         [Usage]
         public static IEnumerable<Example> Examples
         {
             get
             {
-                yield return new Example("Unpack Renowned Explores resources file (content.tim)", new Options { InputFile = "content.time", OutputFolder = "outputFolder" });
+                yield return new Example("Unpack Renowned Explores resources file (content.tim)", new UnpackOptions { InputFile = "content.time", OutputFolder = "outputFolder" });
             }
         }
 

@@ -61,9 +61,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Options.cs" />
+    <Compile Include="Bucket.cs" />
+    <Compile Include="DirectoryListingEntryHeader.cs" />
+    <Compile Include="FileRegistryEntry.cs" />
+    <Compile Include="Packer.cs" />
+    <Compile Include="RepackOptions.cs" />
+    <Compile Include="UnpackOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimHeader.cs" />
     <Compile Include="Unpacker.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

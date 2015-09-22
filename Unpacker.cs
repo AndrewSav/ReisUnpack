@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using LzhamWrapper;
 using LzhamWrapper.Enums;
 
 namespace ReisUnpack
 {
-    class Unpacker
+    internal class Unpacker
     {
         private int _fileCounter;
         private readonly byte[] _fileRegistry;
@@ -34,22 +35,22 @@ namespace ReisUnpack
 
         private int ReadDirectory(int offset, string dirPrefix)
         {
-            ushort nameLength = BitConverter.ToUInt16(_directoryListing, 2 + offset);
-            ushort numDirectories = BitConverter.ToUInt16(_directoryListing, 4 + offset);
-            ushort numFiles = BitConverter.ToUInt16(_directoryListing, 6 + offset);
 
-            string name = Encoding.UTF8.GetString(_directoryListing, offset + 8, nameLength);
+            int size = Marshal.SizeOf(typeof(DirectoryListingEntryHeader));
+            DirectoryListingEntryHeader dleh = Util.ByteArrayToStructure<DirectoryListingEntryHeader>(_directoryListing, offset,  size);
+
+            string name = Encoding.UTF8.GetString(_directoryListing, offset + size, dleh.nameLength);
             var newPrefix = string.IsNullOrEmpty(name) ? dirPrefix : dirPrefix + "\\" + name;
             Console.WriteLine($"[FOLDR/{_total}]{newPrefix}");
 
-            int currentOffset = 8 + offset + nameLength;
+            int currentOffset = size + offset + dleh.nameLength;
 
-            for (int i = 0; i < numDirectories; i++)
+            for (int i = 0; i < dleh.numDirectories; i++)
             {
                 currentOffset = ReadDirectory(currentOffset, newPrefix);
             }
 
-            for (int i = 0; i < numFiles; i++)
+            for (int i = 0; i < dleh.numFiles; i++)
             {
                 _fileCounter++;
                 ushort fileNameLength = BitConverter.ToUInt16(_directoryListing, currentOffset);
@@ -64,28 +65,26 @@ namespace ReisUnpack
 
         private void WriteFile(string fileName, int offset)
         {
-            ulong fileOffset = BitConverter.ToUInt64(_fileRegistry, offset * 24);
-            uint uncompressed = BitConverter.ToUInt32(_fileRegistry, offset * 24 + 8);
-            uint compressed = BitConverter.ToUInt32(_fileRegistry, offset * 24 + 12);
-            byte flag = _fileRegistry[offset * 24 + 16];
+            int size = Marshal.SizeOf(typeof (FileRegistryEntry));
+            FileRegistryEntry fileRegistryEntry = Util.ByteArrayToStructure<FileRegistryEntry>(_fileRegistry, offset * size, size);
 
             string fullName = Path.Combine(_outputFolder, fileName.Trim('\\'));
             string dir = Path.GetDirectoryName(fullName);
             Debug.Assert(dir != null, "dir != null");
             Directory.CreateDirectory(dir);
-            _fs.Seek((long)fileOffset, SeekOrigin.Begin);
+            _fs.Seek((long)fileRegistryEntry.fileOffset, SeekOrigin.Begin);
 
-            if ((flag & 1) == 1)
+            if ((fileRegistryEntry.flag & 1) == 1)
             {
-                byte[] inp = _br.ReadBytes((int)compressed);
-                byte[] outp = new byte[uncompressed];
+                byte[] inp = _br.ReadBytes((int)fileRegistryEntry.compressed);
+                byte[] outp = new byte[fileRegistryEntry.uncompressed];
 
                 DecompressionParameters p = new DecompressionParameters
                 {
-                    DictionarySize = Util.GetDictLength(uncompressed),
+                    DictionarySize = Util.GetDictLength(fileRegistryEntry.uncompressed),
                     UpdateRate = TableUpdateRate.Fastest
                 };
-                int u = (int)uncompressed;
+                int u = (int)fileRegistryEntry.uncompressed;
                 uint addler = 0;
                 DecompressStatus status = Lzham.DecompressMemory(p, inp, inp.Length, 0, outp, ref u, 0, ref addler);
 
@@ -99,7 +98,7 @@ namespace ReisUnpack
             }
             else
             {
-                var hm = _br.ReadBytes((int)compressed);
+                var hm = _br.ReadBytes((int)fileRegistryEntry.compressed);
                 File.WriteAllBytes(fullName, hm);
             }
         }
