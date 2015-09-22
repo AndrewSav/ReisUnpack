@@ -60,7 +60,7 @@ namespace ReisUnpack
 
         private PackerTables CreatePackResult()
         {
-            int indexSize = (int)Math.Pow(2, Util.GetLog((uint)_files.Count));
+            int indexSize = Util.GetIndexSize((uint)_files.Count);
             RebuildBuckets((uint) indexSize);
 
             int[] hashTable = new int[indexSize];

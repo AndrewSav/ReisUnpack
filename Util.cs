@@ -26,7 +26,17 @@ namespace ReisUnpack
              7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
              7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
         };
-        internal static int GetLog(uint v)
+        internal static int GetIndexSize(uint v)
+        {
+            int log = GetLog(v);
+            if ((v & (v - 1)) != 0)
+            {
+                log++;
+            }
+            return (int)Math.Pow(2, log);
+        }
+
+        private static int GetLog(uint v)
         {
             uint t, tt;
             int result;
