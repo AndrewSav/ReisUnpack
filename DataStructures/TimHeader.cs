@@ -6,6 +6,8 @@ namespace ReisUnpack.DataStructures
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct TimHeader
     {
+        public static uint signature = 1498763849;
+        public static ushort currentVersion = 1;
         // Archive id 'YURI'
         public UInt32 id;
         // Size of the archive header

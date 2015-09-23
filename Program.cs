@@ -52,8 +52,8 @@ namespace ReisUnpack
                 TimHeader header = new TimHeader
                 {
                     headerSize = (uint) headerSize,
-                    version = 1,
-                    id = 1498763849,
+                    version = TimHeader.currentVersion,
+                    id = TimHeader.signature,
                     directoryListingDigest = md5.ComputeHash(tables.Directory),
                     fileRegistryDigest = md5.ComputeHash(tables.FileRegistry),
                     bucketTableDigest = md5.ComputeHash(tables.BucketTable),
@@ -229,12 +229,12 @@ namespace ReisUnpack
 
         private static int ValidateHeader(TimHeader header)
         {
-            if (header.id != 1498763849)
+            if (header.id != TimHeader.signature)
             {
                 Console.WriteLine("Unknown format");
                 return 3;
             }
-            if (header.version != 1)
+            if (header.version != TimHeader.currentVersion)
             {
                 Console.WriteLine("Unknown archive version");
                 return 4;
