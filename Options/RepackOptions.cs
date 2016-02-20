@@ -5,7 +5,7 @@ using LzhamWrapper.Enums;
 
 namespace ReisUnpack.Options
 {
-    [Verb("repack", HelpText = "Repaock Renown Explorers resources into archive")]
+    [Verb("repack", HelpText = "Repack Renown Explorers resources into archive")]
     class RepackOptions
     {
         [Usage]
@@ -13,7 +13,7 @@ namespace ReisUnpack.Options
         {
             get
             {
-                yield return new Example("Repack Renowned Explores resources files into (content.tim)", new RepackOptions { OutputFile = "content.time", InputFolder = "inputFolder" });
+                yield return new Example("Repack Renowned Explores resources files into (content.tim)", new RepackOptions { OutputFile = "content.tim", InputFolder = "inputFolder" });
             }
         }
 

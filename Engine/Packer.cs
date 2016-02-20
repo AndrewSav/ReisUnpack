@@ -150,6 +150,11 @@ namespace ReisUnpack.Engine
                 byte[] compressedData = new byte[fileSize];
                 int compressedSize = (int)fileSize;
                 uint addler = 0;
+
+                //Yikes!!!!
+                GC.Collect();
+                GC.WaitForFullGCComplete();
+
                 CompressStatus status = Lzham.CompressMemory(p, fileData, fileData.Length, 0, compressedData, ref compressedSize, 0, ref addler);
                 if (status != CompressStatus.Success && status != CompressStatus.OutputBufferTooSmall)
                 {

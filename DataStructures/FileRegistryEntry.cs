@@ -9,6 +9,6 @@ namespace ReisUnpack.DataStructures
         public UInt64 fileOffset;
         public UInt32 uncompressed;
         public UInt32 compressed;
-        public UInt64 flag;
+        public byte flag;
     }
 }

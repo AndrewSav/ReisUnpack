@@ -201,7 +201,7 @@ namespace ReisUnpack
                 fs.Seek((long)header.fileRegistryOffset, SeekOrigin.Begin);
                 byte[] fileRegistryCompressed = br.ReadBytes((int)header.fileRegistryCompressedSize);
 
-                outsize = (int)header.fileCount * 24;
+                outsize = (int)header.fileCount * Marshal.SizeOf(typeof(FileRegistryEntry));
                 p = new DecompressionParameters
                 {
                     DictionarySize = Util.GetDictLength((uint)outsize),
